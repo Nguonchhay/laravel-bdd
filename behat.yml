@@ -1,9 +1,9 @@
 default:
   autoload:
-    '': %paths.base%/features/bootstrap
+    '': %paths.base%/tests/features/bootstrap
   extensions:
     Laracasts\Behat:
-      env_path: .env.behat
+      #env_path: .env.behat
     Behat\MinkExtension:
       base_url: http://test.laravel-5.4-bdd:8080
       show_cmd: 'open %s'
@@ -27,7 +27,7 @@ default:
   suites:
     default:
       paths: &featurePaths
-        - '%paths.base%/features/default'
+        - '%paths.base%/tests/features/default'
       contexts: &contexts
         - FeatureContext
         - ApplicationContext
@@ -36,7 +36,7 @@ default:
 
     smoke:
       paths:
-        - '%paths.base%/features/smoke'
+        - '%paths.base%/tests/features/smoke'
       contexts:
         - FeatureContext
       filters:
@@ -45,6 +45,5 @@ default:
 # For running test on local in chrome with selenium
 local:
   extensions:
-    Behat\MinkExtension:
-      selenium2:
-        wd_host: http://localhost:4444/wd/hub
+    Laracasts\Behat:
+      env_path: .env.behat
