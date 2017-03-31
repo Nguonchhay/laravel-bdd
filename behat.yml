@@ -1,0 +1,50 @@
+default:
+  autoload:
+    '': %paths.base%/features/bootstrap
+  extensions:
+    Laracasts\Behat:
+      env_path: .env.behat
+    Behat\MinkExtension:
+      base_url: http://test.laravel-5.4-bdd:8080
+      show_cmd: 'open %s'
+      default_session: laravel
+      laravel: ~
+
+    emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+      name: html
+      renderer: Twig,Behat2
+      file_name: uat-report
+      print_args: true
+      print_outp: true
+      loop_break: true
+  formatters:
+    pretty: true
+    junit:
+      output_path: ./build/logs
+    html:
+      output_path: ./build/logs
+
+  suites:
+    default:
+      paths: &featurePaths
+        - '%paths.base%/features/default'
+      contexts: &contexts
+        - FeatureContext
+        - ApplicationContext
+      filters:
+        tags: ~@skip
+
+    smoke:
+      paths:
+        - '%paths.base%/features/smoke'
+      contexts:
+        - FeatureContext
+      filters:
+        tags: ~@skip
+
+# For running test on local in chrome with selenium
+local:
+  extensions:
+    Behat\MinkExtension:
+      selenium2:
+        wd_host: http://localhost:4444/wd/hub
